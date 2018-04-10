@@ -1,21 +1,21 @@
 <template>
   <v-app>
     <app-header></app-header>
-    <app-news-source></app-news-source>
+    <app-news></app-news>
+    <app-footer></app-footer>
   </v-app>
 </template>
 
 <script>
 import Header from './components/Header'
-import NewsSource from './components/NewsSource'
+import News from './components/News'
+import Footer from './components/Footer'
 
 export default {
   components: {
+    appFooter: Footer,
     appHeader: Header,
-    appNewsSource: NewsSource
-  },
-  data () {
-    return {}
+    appNews: News,
   }
 }
 </script>
