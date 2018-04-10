@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar>
+  <v-toolbar fixed>
     <v-toolbar-title>Top Headlines</v-toolbar-title>
     <v-container>
       <v-layout row wrap>
