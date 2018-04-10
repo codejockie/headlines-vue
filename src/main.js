@@ -13,6 +13,12 @@ export const EVENT_BUS = new Vue({
   methods: {
     setArticles(articles) {
       this.$emit('articlesSet', articles)
+    },
+    setHeadlinesFetchError(error) {
+      this.$emit('errorFetchingHeadlines', error)
+    },
+    setSourcesFetchError(error) {
+      this.$emit('errorFetchingSources', error)
     }
   }
 })

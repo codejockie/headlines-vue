@@ -8,6 +8,14 @@
         <app-news-card :article="article"></app-news-card>
       </v-flex>
     </v-layout>
+    <v-snackbar
+      :timeout="timeout"
+      bottom="bottom"
+      v-model="snackbar"
+    >
+      {{ text }}
+      <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -24,11 +32,19 @@ export default {
       this.articles = articles
       this.isLoading = false
     })
+    EVENT_BUS.$on('errorFetchingHeadlines', () => {
+      this.text = 'Error occurred while fetching headlines'
+      this.error = error
+    })
   },
   data() {
     return {
       articles: [],
+      error: null,
       isLoading: true,
+      snackbar: false,
+      text: '',
+      timeout: 6000,
     }
   }
 }

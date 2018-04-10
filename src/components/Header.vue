@@ -38,6 +38,14 @@
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn flat>Profile</v-btn>
     </v-toolbar-items>
+    <v-snackbar
+      :timeout="timeout"
+      bottom="bottom"
+      v-model="snackbar"
+    >
+      {{ text }}
+      <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-toolbar>
 </template>
 
@@ -48,12 +56,22 @@ import { EVENT_BUS } from '../main'
 const NEWS_API_KEY = process.env.NEWS_API_KEY
 
 export default {
+  created() {
+    EVENT_BUS.$on('errorFetchingSources', () => {
+      this.text = 'Error occurred while fetching news sources'
+      this.error = error
+    })
+  },
   data() {
     return {
+      error: null,
       language: 'en',
       languages: getAvailableLanguages(),
       newsSources: [],
       selectedNewsSource: '',
+      snackbar: false,
+      text: '',
+      timeout: 6000,
     };
   },
   methods: {
@@ -70,14 +88,16 @@ export default {
           ]
           this.setNewsSource(randomNewsSource.id)
         }
-      })
+      },
+      error => EVENT_BUS.setSourcesFetchError(error))
     },
     fetchTopHeadlines() {
       this.$http.get(`https://newsapi.org/v2/top-headlines?sources=${this.selectedNewsSource}&pageSize=12&apiKey=${NEWS_API_KEY}`)
       .then((response) => {
         const { body: { articles } } = response
         EVENT_BUS.setArticles(articles)
-      })
+      },
+      error => EVENT_BUS.setHeadlinesFetchError(error))
     },
     setLanguage(language) {
       this.language = language
