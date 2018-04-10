@@ -1,5 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
+const envFile = require('node-env-file')
+
+if (process.env.NODE_ENV === 'development') {
+  envFile(path.join(__dirname, `.env`))
+}
 
 module.exports = {
   entry: './src/main.js',
@@ -83,7 +88,14 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NEWS_API_KEY: JSON.stringify(process.env.NEWS_API_KEY)
+      }
+    })
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -92,7 +104,8 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        NEWS_API_KEY: JSON.stringify(process.env.NEWS_API_KEY)
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
