@@ -1,10 +1,16 @@
 <template>
   <v-card height="400px">
-    <v-card-media :src="article.urlToImage" height="200px">
+    <v-card-media class="white--text" :src="article.urlToImage" height="200px">
+      <v-container fill-height fluid>
+        <v-layout fill-height>
+          <v-flex xs12 align-end flexbox>
+            <span class="headline">{{ getTitle(article.title) }}</span>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-card-media>
     <v-card-title primary-title>
       <div>
-        <h3 class="headline mb-0" id="title">{{ getTitle(article.title) }}</h3>
         <div id="description">{{ getDescription(article.description) }}</div>
       </div>
     </v-card-title>
@@ -22,7 +28,7 @@ export default {
       if (!text) {
         return 'No title found for this article'
       }
-      return `${text.substr(0, 40)}...`
+      return `${text.substr(0, 50)}...`
     },
     getDescription(text) {
        if (!text) {
@@ -35,14 +41,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  #description {
-    font-size: 12px;
-    line-height: 15px;
-  }
-
-  #title {
-    font-size: 18px;
-    line-height: 25px;
-    font-weight: 400;
-  }
 </style>
