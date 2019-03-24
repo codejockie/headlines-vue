@@ -1,6 +1,6 @@
 <template>
   <v-card height="400px">
-    <v-card-media class="white--text" :src="article.urlToImage" height="200px">
+    <v-img class="white--text" :src="article.urlToImage" height="200px">
       <v-container fill-height fluid>
         <v-layout fill-height>
           <v-flex xs12 align-end flexbox>
@@ -8,7 +8,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </v-card-media>
+    </v-img>
     <v-card-title primary-title>
       <div>
         <div id="description">{{ getDescription(article.description) }}</div>
