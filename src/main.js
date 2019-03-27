@@ -9,6 +9,18 @@ import 'vuetify/dist/vuetify.min.css'
 Vue.use(Vuetify)
 Vue.use(VueResource)
 
+Vue.mixin({
+  methods: {
+    isMobile() {
+      const regex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i
+      return regex.test(navigator.userAgent || navigator.vendor || window.opera)
+    },
+    isTouchscreen() {
+      return 'ontouchstart' in document.documentElement
+    }
+  }
+})
+
 export const EVENT_BUS = new Vue({
   methods: {
     setArticles(articles) {
