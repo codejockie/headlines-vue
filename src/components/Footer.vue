@@ -1,6 +1,5 @@
 <template>
   <v-footer class="pa-3" fixed>
-    <v-spacer></v-spacer>
     <div class="text-xs-center" id="creator">
       Made with
       <v-btn flat icon color="pink">
@@ -20,6 +19,7 @@
         <v-icon dark :color="link.colour">{{ link.icon }}</v-icon>
       </v-btn>
     </div>
+    <v-spacer></v-spacer>
     <div id="copyright">&copy; {{ copyright }}</div>
   </v-footer>
 </template>
