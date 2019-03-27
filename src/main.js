@@ -5,8 +5,11 @@ import VueResource from 'vue-resource'
 import App from './App.vue'
 
 import 'vuetify/dist/vuetify.min.css'
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  iconfont: 'mdi'
+})
 Vue.use(VueResource)
 
 Vue.mixin({
