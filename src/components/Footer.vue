@@ -7,14 +7,18 @@
         <v-icon>favorite</v-icon>
       </v-btn>
       <v-btn
-        href="https://github.com/codejockie"
+        :href="link.url"
         color="info"
         target="_blank"
         flat
-        dark
         external
+        icon
         noreferrer
-      >{{ creator }}</v-btn>
+        v-for="(link) in links"
+        :key="link.icon"
+      >
+        <v-icon dark :color="link.colour">{{ link.icon }}</v-icon>
+      </v-btn>
     </div>
     <div id="copyright">&copy; {{ copyright }}</div>
   </v-footer>
@@ -25,7 +29,19 @@ export default {
   data() {
     return {
       copyright: new Date().getFullYear(),
-      creator: "codejockie"
+      creator: "codejockie",
+      links: [
+        {
+          colour: "green",
+          icon: "mdi-github-circle",
+          url: "https://github.com/codejockie"
+        },
+        {
+          colour: "primary",
+          icon: "mdi-twitter-circle",
+          url: "https://twitter.com/codejockie"
+        }
+      ]
     };
   }
 };
