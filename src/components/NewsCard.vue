@@ -1,8 +1,8 @@
 <template>
-  <v-card height="400px">
+  <v-card class="flexcard" height="400px">
     <v-img class="white--text" :src="article.urlToImage" height="200px">
       <v-container fill-height fluid>
-        <v-layout fill-height>
+        <v-layout row wrap>
           <v-flex xs12 align-end flexbox>
             <span class="headline">{{ getTitle(article.title) }}</span>
           </v-flex>
@@ -15,30 +15,36 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn :href="article.url" target="_blank" flat color="info">View from source</v-btn>
+      <v-btn :href="article.url" target="_blank" color="info" flat>View from source</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ['article'],
+  props: {
+    article: Object
+  },
   methods: {
     getTitle(text) {
       if (!text) {
-        return 'No title found for this article'
+        return "This article doesn't seem to have a title.";
       }
-      return `${text.substr(0, 50)}...`
+      return text;
     },
     getDescription(text) {
-       if (!text) {
-        return 'No description found for this article'
+      if (!text) {
+        return "No description found for this article";
       }
-      return `${text.substr(0, 100)}...`
+      return text;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+.flexcard {
+  display: flex;
+  flex-direction: column;
+}
 </style>

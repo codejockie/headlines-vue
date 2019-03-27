@@ -1,13 +1,14 @@
 <template>
   <v-toolbar color="pink" dark fixed>
-    <v-toolbar-title>Top Headlines</v-toolbar-title>
+    <v-toolbar-side-icon v-if="isMobile()"></v-toolbar-side-icon>
+    <v-toolbar-title v-if="!isMobile()">Top Headlines</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-layout row wrap>
       <v-flex xs6>
         <v-select
           @change="setNewsSource"
           :items="newsSources"
-          append-icon="fa-newspaper"
+          :append-icon="icon('fa-newspaper')"
           auto-complete
           item-text="name"
           item-value="id"
@@ -22,7 +23,7 @@
         <v-select
           @change="setLanguage"
           :items="languages"
-          append-icon="fa-language"
+          :append-icon="icon('fa-language')"
           auto-complete
           item-text="name"
           item-value="id"
@@ -119,6 +120,10 @@ export default {
     setNewsSource(newsSource) {
       this.selectedNewsSource = newsSource;
       this.fetchTopHeadlines();
+    },
+    icon(iconName) {
+      if (!this.isMobile()) return iconName
+      return ''
     }
   },
   mounted() {
@@ -128,4 +133,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 400px) {
+  .grow, .spacer {
+    flex-grow: 0.9 !important;
+  }
+}
 </style>

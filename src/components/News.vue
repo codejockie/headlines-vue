@@ -4,8 +4,10 @@
       <v-flex xs12 class="loading" v-if="isLoading">
         <v-progress-circular indeterminate :size="70" color="info"></v-progress-circular>
       </v-flex>
-      <v-flex xs3 v-else v-for="(article, index) in articles" :key="index">
-        <app-news-card :article="article"></app-news-card>
+      <v-flex :xs3="!isMobile()" v-else v-for="(article, index) in articles" :key="index">
+        <v-hover>
+          <app-news-card :article="article"></app-news-card>
+        </v-hover>
       </v-flex>
     </v-layout>
     <v-snackbar
