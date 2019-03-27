@@ -1,17 +1,24 @@
-import { mount } from 'vue-test-utils'
+import {
+  mount
+} from 'vue-test-utils'
 import Footer from '../src/components/Footer'
 
 /*
  *  Using `mount` clears the error:
  * [Vue warn]: Do not use built-in or reserved HTML elements as component id: data
  */
-const factory = (values = {}) => mount(Footer, { data: { ...values  } })
+const factory = (values = {}) => mount(Footer, {
+  data: {
+    ...values
+  }
+})
 
 describe('Footer', () => {
   it("renders creator's text", () => {
     const wrapper = factory()
 
-    expect(wrapper.find('#creator').text()).toEqual('Made with fas fa-heart by codejockie')
+    expect(wrapper.find('#creator').text()).toEqual(`Made with
+    favorite mdi-github-circlemdi-twitter-circle`)
   })
 
   it('renders copyright', () => {
