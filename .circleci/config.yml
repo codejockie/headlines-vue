@@ -26,10 +26,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run:
-          name: Run tests
-          command: yarn test
+      # - run:
+      #     name: Run tests
+      #     command: yarn test
 
       - run:
           name: Deploy
-          command: bash deploy.sh
+          command: ./deploy.sh
