@@ -1,6 +1,8 @@
 <template>
   <v-toolbar color="pink" dark fixed>
-    <v-toolbar-side-icon v-if="isMobile()"></v-toolbar-side-icon>
+    <v-toolbar-side-icon v-if="isMobile()">
+      <v-icon>mdi-account-circle</v-icon>
+    </v-toolbar-side-icon>
     <v-toolbar-title v-if="!isMobile()">Top Headlines</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-layout row wrap>
@@ -15,7 +17,7 @@
           label="Select news source"
           single-line
           search-input.sync
-          v-model="selectedNewsSource"
+          v-model="newsSource"
         ></v-select>
       </v-flex>
       <v-spacer></v-spacer>
@@ -35,8 +37,8 @@
       </v-flex>
     </v-layout>
     <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat>Profile</v-btn>
+    <v-toolbar-items class="hidden-sm-and-down profile" v-if="!isMobile()">
+      <v-icon>mdi-account-circle</v-icon>
     </v-toolbar-items>
     <v-snackbar :timeout="timeout" bottom="bottom" v-model="snackbar">
       {{ text }}
@@ -64,7 +66,7 @@ export default {
       language: "en",
       languages: getAvailableLanguages(),
       newsSources: [],
-      selectedNewsSource: "",
+      newsSource: "",
       snackbar: false,
       text: "",
       timeout: 6000
@@ -73,19 +75,12 @@ export default {
   methods: {
     fetchNewsSources() {
       this.$http
-        .get(
-          `https://newsapi.org/v2/sources?language=${
-            this.language
-          }&apiKey=${NEWS_API_KEY}`
-        )
-        .then(
-          response => {
-            const {
-              body: { sources }
-            } = response;
+        .get(`sources?language=${this.language}&apiKey=${NEWS_API_KEY}`)
+        .then(({ data }) => {
+            const { sources } = data;
             this.newsSources = sources;
 
-            if (!this.selectedNewsSource) {
+            if (!this.newsSource) {
               // Set a random news source for initial page load
               const randomNewsSource = this.newsSources[
                 Math.floor(Math.random() * this.newsSources.length)
@@ -98,16 +93,9 @@ export default {
     },
     fetchTopHeadlines() {
       this.$http
-        .get(
-          `https://newsapi.org/v2/top-headlines?sources=${
-            this.selectedNewsSource
-          }&pageSize=12&apiKey=${NEWS_API_KEY}`
-        )
-        .then(
-          response => {
-            const {
-              body: { articles }
-            } = response;
+        .get(`top-headlines?sources=${this.newsSource}&pageSize=12&apiKey=${NEWS_API_KEY}`)
+        .then(({ data }) => {
+            const { articles } = data;
             EVENT_BUS.setArticles(articles);
           },
           error => EVENT_BUS.setHeadlinesFetchError(error)
@@ -118,7 +106,7 @@ export default {
       this.fetchNewsSources();
     },
     setNewsSource(newsSource) {
-      this.selectedNewsSource = newsSource;
+      this.newsSource = newsSource;
       this.fetchTopHeadlines();
     },
     icon(iconName) {
@@ -137,5 +125,8 @@ export default {
   .grow, .spacer {
     flex-grow: 0.9 !important;
   }
+}
+.profile {
+  cursor: pointer;
 }
 </style>
