@@ -1,14 +1,14 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/headlines-vue
+    branches:
+      only: master
+
     docker:
       # specify the version you desire here
       - image: circleci/node:10.15
 
-    branches:
-      only:
-        - master
+    working_directory: ~/headlines-vue
 
     steps:
       - checkout
