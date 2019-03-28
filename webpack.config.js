@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 const envFile = require('node-env-file')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 if (process.env.NODE_ENV === 'development') {
   envFile(path.join(__dirname, `.env`))
@@ -94,6 +95,10 @@ module.exports = {
       'process.env': {
         NEWS_API_KEY: JSON.stringify(process.env.NEWS_API_KEY)
       }
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Headlines',
+      template: 'index.html'
     })
   ]
 }
