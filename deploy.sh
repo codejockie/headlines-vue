@@ -3,9 +3,6 @@
 # abort on errors
 set -e
 
-# run tests
-yarn test
-
 # build
 yarn build
 
