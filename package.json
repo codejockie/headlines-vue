@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@mdi/font": "^3.5.95",
+    "axios": "^0.18.0",
     "node-env-file": "^0.1.8",
     "vue": "^2.5.11",
-    "vue-resource": "^1.5.0",
     "vuetify": "^1.5.7"
   },
   "browserslist": [
