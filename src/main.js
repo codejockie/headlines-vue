@@ -9,9 +9,12 @@ import '@mdi/font/css/materialdesignicons.css'
 // Component import
 import App from './App.vue'
 
-
+const { NEWS_API_KEY } = process.env;
 const base = axios.create({
-  baseURL: 'https://newsapi.org/v2'
+  baseURL: 'https://newsapi.org/v2',
+  params: {
+    apiKey: NEWS_API_KEY
+  }
 })
 
 Vue.prototype.$http = base
