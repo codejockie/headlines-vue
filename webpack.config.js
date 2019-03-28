@@ -98,7 +98,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: 'Headlines',
-      template: 'index.html'
+      template: 'template.html'
     })
   ]
 }
