@@ -35,7 +35,7 @@
     </v-layout>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-icon>mdi-account-circle</v-icon>
+      <v-icon class="profile">mdi-account-circle</v-icon>
     </v-toolbar-items>
     <v-snackbar :timeout="timeout" bottom="bottom" v-model="snackbar">
       {{ text }}
@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import getAvailableLanguages from "../helpers/languages";
-import { EVENT_BUS } from "../main";
+import { getLanguages } from "../../helpers/languages";
+import { EVENT_BUS } from "../../main";
 
 export default {
   created() {
@@ -59,7 +59,7 @@ export default {
     return {
       error: null,
       language: "en",
-      languages: getAvailableLanguages(),
+      languages: getLanguages(),
       newsSources: [],
       newsSource: "",
       snackbar: false,
