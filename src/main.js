@@ -33,7 +33,7 @@ Vue.use(Vuetify, {
 // Vue Mixins
 Vue.mixin({
   methods: {
-    isMobile() {
+    isMobileDevice() {
       const regex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i
       return regex.test(navigator.userAgent || navigator.vendor || window.opera)
     },
@@ -53,6 +53,9 @@ export const EVENT_BUS = new Vue({
     },
     setSourcesFetchError(error) {
       this.$emit('errorFetchingSources', error)
+    },
+    toggleDrawer() {
+      this.$emit('drawer')
     }
   }
 })
@@ -64,5 +67,29 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   render: h => h(App),
-  router
+  router,
+  data() {
+    return {
+      windowHeight: 0,
+      windowWidth: 0
+    }
+  },
+  methods: {
+    getWindowWidth(event) {
+      this.windowWidth = document.documentElement.clientWidth
+    },
+    getWindowHeight(event) {
+      this.windowHeight = document.documentElement.clientHeight
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.getWindowHeight)
+      window.addEventListener('resize', this.getWindowWidth)
+    })
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.getWindowHeight)
+    window.removeEventListener('resize', this.getWindowWidth)
+  }
 })

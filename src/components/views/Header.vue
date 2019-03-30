@@ -1,9 +1,10 @@
 <template>
   <v-toolbar color="pink" dark fixed>
-    <v-toolbar-title v-if="!isMobile()">Top Headlines</v-toolbar-title>
+    <v-toolbar-side-icon @click="toggle()"></v-toolbar-side-icon>
+    <v-toolbar-title v-if="!isMobileDevice()">Top Headlines</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-layout row wrap>
-      <v-flex xs6>
+      <v-flex xs7>
         <v-select
           @change="setNewsSource"
           :items="newsSources"
@@ -34,8 +35,8 @@
       </v-flex>
     </v-layout>
     <v-spacer></v-spacer>
-    <v-toolbar-items>
-      <v-icon class="profile">mdi-account-circle</v-icon>
+    <v-toolbar-items v-if="!isMobileDevice()">
+      <v-icon class="profile" large>mdi-account-circle</v-icon>
     </v-toolbar-items>
     <v-snackbar :timeout="timeout" bottom="bottom" v-model="snackbar">
       {{ text }}
@@ -45,14 +46,14 @@
 </template>
 
 <script>
-import { getLanguages } from "../../helpers/languages";
-import { EVENT_BUS } from "../../main";
+import { getLanguages } from "../../helpers/languages"
+import { EVENT_BUS } from "../../main"
 
 export default {
   created() {
     EVENT_BUS.$on("errorFetchingSources", () => {
-      this.text = "Error occurred while fetching news sources";
-      this.error = error;
+      this.text = "Error occurred while fetching news sources"
+      this.error = error
     });
   },
   data() {
@@ -65,53 +66,56 @@ export default {
       snackbar: false,
       text: "",
       timeout: 6000
-    };
+    }
   },
   methods: {
     fetchNewsSources() {
       this.$http
         .get(`sources?language=${this.language}`)
         .then(({ data }) => {
-            const { sources } = data;
-            this.newsSources = sources;
+            const { sources } = data
+            this.newsSources = sources
 
             if (!this.newsSource) {
               // Set a random news source for initial page load
               const randomNewsSource = this.newsSources[
                 Math.floor(Math.random() * this.newsSources.length)
-              ];
-              this.setNewsSource(randomNewsSource.id);
+              ]
+              this.setNewsSource(randomNewsSource.id)
             }
           },
           error => EVENT_BUS.setSourcesFetchError(error)
-        );
+        )
     },
     fetchTopHeadlines() {
       this.$http
         .get(`top-headlines?sources=${this.newsSource}&pageSize=16`)
         .then(({ data }) => {
             const { articles } = data;
-            EVENT_BUS.setArticles(articles);
+            EVENT_BUS.setArticles(articles)
           },
           error => EVENT_BUS.setHeadlinesFetchError(error)
-        );
+        )
     },
     icon(iconName) {
-      return this.isMobile() ? '' : iconName
+      return this.isMobileDevice() ? '' : iconName
     },
     setLanguage(language) {
-      this.language = language;
-      this.fetchNewsSources();
+      this.language = language
+      this.fetchNewsSources()
     },
     setNewsSource(newsSource) {
-      this.newsSource = newsSource;
-      this.fetchTopHeadlines();
+      this.newsSource = newsSource
+      this.fetchTopHeadlines()
+    },
+    toggle() {
+      EVENT_BUS.toggleDrawer()
     }
   },
   mounted() {
-    this.fetchNewsSources();
+    this.fetchNewsSources()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
