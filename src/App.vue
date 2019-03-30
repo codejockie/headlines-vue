@@ -1,21 +1,20 @@
 <template>
   <v-app>
     <app-header></app-header>
-    <app-news></app-news>
+    <!-- Render child views based on route path -->
+    <router-view></router-view>
     <app-footer></app-footer>
   </v-app>
 </template>
 
 <script>
-import Header from './components/Header'
-import News from './components/News'
-import Footer from './components/Footer'
+import Header from './components/views/Header'
+import Footer from './components/views/Footer'
 
 export default {
   components: {
     appFooter: Footer,
-    appHeader: Header,
-    appNews: News,
+    appHeader: Header
   }
 }
 </script>

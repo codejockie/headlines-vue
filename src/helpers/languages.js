@@ -1,4 +1,4 @@
-const getAvailableLanguages = () => {
+export const getLanguages = () => {
   return [
     {
       id: 'ar',
@@ -62,5 +62,3 @@ const getAvailableLanguages = () => {
     }
   ]
 }
-
-export default getAvailableLanguages

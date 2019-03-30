@@ -1,6 +1,6 @@
 <template>
   <v-card class="flexcard" height="400px">
-    <v-img class="white--text" :src="article.urlToImage" height="200px">
+    <v-img class="white--text" :src="getImage(article.urlToImage)" height="200px">
       <v-container fill-height fluid>
         <v-layout row wrap>
           <v-flex xs12 align-end flexbox>
@@ -15,7 +15,7 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn :href="article.url" target="_blank" color="info" flat>View from source</v-btn>
+      <v-btn :href="article.url" rel="noopener noreferrer" target="_blank" color="info" flat>View from source</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -26,17 +26,14 @@ export default {
     article: Object
   },
   methods: {
-    getTitle(text) {
-      if (!text) {
-        return "This article doesn't seem to have a title.";
-      }
-      return text;
-    },
     getDescription(text) {
-      if (!text) {
-        return "No description found for this article";
-      }
-      return text;
+      return text || "Oh! Oh! We think there was a problem fetching the description."
+    },
+    getImage(urlToImage) {
+      return urlToImage || ""
+    },
+    getTitle(text) {
+      return text || "Oops! We think there was a problem with the title for this article."
     }
   }
 };

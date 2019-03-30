@@ -1,7 +1,5 @@
-import {
-  mount
-} from 'vue-test-utils'
-import Footer from '../src/components/Footer'
+import { mount } from 'vue-test-utils'
+import Footer from '../src/components/views/Footer'
 
 /*
  *  Using `mount` clears the error:

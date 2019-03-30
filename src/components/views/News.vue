@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { EVENT_BUS } from "../main";
+import { EVENT_BUS } from "../../main";
 import NewsCard from "./NewsCard";
 
 export default {
